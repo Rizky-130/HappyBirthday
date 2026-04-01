@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      padding: 15px 25px;
+      border: none;
+      border-radius: 30px;
+      background: #fff;
+      color: #ff6b81;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .text {
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+      min-height: 120px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .show {
+      opacity: 1;
+    }
+
+    .heart {
+      position: fixed;
+      color: #ff1744;
+      animation: floatUp 5s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+      text-shadow: 0 0 8px rgba(255,50,100,0.8);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .music-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      opacity: 0;
+      transition: 0.5s;
+      z-index: 3;
+    }
+
+    .music-popup.show {
+      opacity: 1;
+    }
+
+    .intro {
+      font-size: 20px;
+      opacity: 0;
+      transition: 1s;
+    }
+
+    .end-button {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="music-popup" id="musicPopup">🎵 Now Playing: Risk It All - Bruno Mars</div>
+
+  <div class="container">
+    <h2>Untuk Kamu, Ayu ku sayang❤️</h2>
+    <button onclick="startExperience()">Klik untuk mulai</button>
+
+    <div class="intro" id="intro">Aku punya sesuatu untuk kamu... 💌</div>
+    <div class="text" id="text"></div>
+
+    <button class="end-button" id="endBtn" onclick="alert('Kiw kiw di pencet yaa, mwwuach. ini buat kamu sayang semoga kamu suka ❤️')">Klik ini ya bubs 💕</button>
+  </div>
+
+  <audio id="bgMusic" src="music.mp3"></audio>
+
+  <script>
+    const messages = [
+      "Selamat ulang tahun ya sayang... 🎂",
+      "Hari ini adalah hari spesialnya kamu...",
+      "Dan aku bersyukur banget bisa ada di hidup kamu sayang 💖",
+      "Makasih ya udah sabar sama aku selama ini...",
+      "Terima kasih sudah jadi seseorang yang selalu ada... buat aku",
+      "Semoga hal yang jadi impian kamu dapat tercapai ✨",
+      "Dan semoga kita bisa terus bersama ya ❤️",
+      "Aku sayang kamu... selalu 💕"
+    ];
+
+    let index = 0;
+    let charIndex = 0;
+
+    function startExperience() {
+      document.querySelector("button").style.display = "none";
+
+      playMusic();
+      showPopup();
+      createHearts();
+
+      setTimeout(() => {
+        showIntro();
+      }, 500);
+
+      setTimeout(() => {
+        document.getElementById("intro").style.opacity = 0;
+      }, 3000);
+
+      setTimeout(() => {
+        startMessage();
+      }, 4000);
+    }
+
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.play();
+    }
+
+    function showPopup() {
+      const popup = document.getElementById("musicPopup");
+      popup.classList.add("show");
+
+      setTimeout(() => {
+        popup.classList.remove("show");
+      }, 4000);
+    }
+
+    function showIntro() {
+      document.getElementById("intro").style.opacity = 1;
+    }
+
+    function startMessage() {
+      document.getElementById("text").classList.add("show");
+      typeText();
+    }
+
+    function typeText() {
+      if (index < messages.length) {
+        let currentText = messages[index];
+        let display = document.getElementById("text");
+
+        if (charIndex < currentText.length) {
+          display.innerHTML += currentText.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeText, 40);
+        } else {
+          display.innerHTML += "<br><br>";
+          index++;
+          charIndex = 0;
+          setTimeout(typeText, 1000);
+        }
+      } else {
+        document.getElementById("endBtn").style.display = "inline-block";
+      }
+    }
+
+    function createHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 6000);
+      }, 300);
+    }
+  </script>
+</body>
+</html>
