@@ -12,11 +12,11 @@
       color: #fff;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
+      align-items: flex-start; /* biar bisa scroll ke bawah */
+      min-height: 100vh; /* bukan height fixed */
       text-align: center;
-      padding: 20px;
-      overflow: hidden;
+      padding: 40px 20px; /* tambah ruang atas bawah */
+      overflow-x: hidden; 
     }
 
     .container {
